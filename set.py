@@ -7,6 +7,20 @@ import random
 from termcolor import colored
 
 
+def computer_choice_helper(player2, card_buffer1, card_buffer2, high_val, low_val):
+
+	for i in player2:
+		if high_val > i > low_val:
+			card_buffer1.append(i)
+		else:
+			card_buffer2.append(i)
+	card_buffer1.sort()
+	card_buffer2.sort()
+	if len(card_buffer1) == 0:
+		return card_buffer2[0]
+	else:
+		return card_buffer1[-1]
+
 def computer_choice1(inpt, player2):
 	card_buffer1 = []
 	card_buffer2 = []
@@ -23,53 +37,13 @@ def computer_choice1(inpt, player2):
 		else:
 			return card_buffer1[0]
 	elif 19 > player1[inpt] > 10:
-		for i in player2:
-			if 19 > i > 10:
-				card_buffer1.append(i)
-			else:
-				card_buffer2.append(i)
-		card_buffer1.sort()
-		card_buffer2.sort()
-		if len(card_buffer1) == 0:
-			return card_buffer2[0]
-		else:
-			return card_buffer1[-1]
+		return computer_choice_helper(player2, card_buffer1, card_buffer2, 19, 10)
 	elif 29 > player1[inpt] > 20:
-		for i in player2:
-			if 29 > i > 20:
-				card_buffer1.append(i)
-			else:
-				card_buffer2.append(i)
-		card_buffer1.sort()
-		card_buffer2.sort()
-		if len(card_buffer1) == 0:
-			return card_buffer2[0]
-		else:
-			return card_buffer1[-1]
+		return computer_choice_helper(player2, card_buffer1, card_buffer2, 29, 20)
 	elif 39 > player1[inpt] > 30:
-		for i in player2:
-			if 39 > i > 30:
-				card_buffer1.append(i)
-			else:
-				card_buffer2.append(i)
-		card_buffer1.sort()
-		card_buffer2.sort()
-		if len(card_buffer1) == 0:
-			return card_buffer2[0]
-		else:
-			return card_buffer1[-1]
+		return computer_choice_helper(player2, card_buffer1, card_buffer2, 39, 30)
 	elif 49 > player1[inpt] > 40:
-		for i in player2:
-			if 49 > i > 40:
-				card_buffer1.append(i)
-			else:
-				card_buffer2.append(i)
-		card_buffer1.sort()
-		card_buffer2.sort()
-		if len(card_buffer1) == 0:
-			return card_buffer2[0]
-		else:
-			return card_buffer1[-1]
+		return computer_choice_helper(player2, card_buffer1, card_buffer2, 49, 40)
 
 
 def computer_choice2(player2):
@@ -244,6 +218,21 @@ def giving_cards(game_set):
 
 	return player1, player2
 
+
+def auto_giving_cards(player2, widow1, widow2):
+
+	player_2 = player2 + widow1 + widow2
+
+	for i in range(0,2):
+		player_2.sort()
+		player_2.remove(player_2[0])
+		player1.append(player_2[0])
+	
+	player2 = player_2
+
+	return player2
+
+
 card_set = [11, 12, 13, 14, 15, 16, 17, 18, 
 			21, 22, 23, 24, 25, 26, 27, 28, 
 			31, 32, 33, 34, 35, 36, 37, 38,
@@ -345,17 +334,13 @@ while game:
 		player1, player2 = giving_cards(game_set)
 		
 		os.system('clear')
-		player_2 = player2 + widow1 + widow2
-
-		for i in range(0,2):
-			player_2.sort()
-			player_2.remove(player_2[0])
-			player1.append(player_2[0])
-		player2 = player_2
+		player2 = auto_giving_cards(player2, widow1, widow2)
 
 		os.system('clear')
 		print 'Let`s start the game!'
+
 		for i in range(8):
+
 			print 'Your cards: ', 'Trump of the game:', game_trump
 			print_card_template(player1)
 

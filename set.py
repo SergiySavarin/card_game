@@ -147,6 +147,22 @@ def score_counter(score):
 			result += i
 	return result
 
+
+def score_adder(player1, player2, inpt1, inpt2, score_p1, score_p2):
+	if player1[inpt1] > inpt2[0]:
+		score_p1.append(player1[inpt1])
+		score_p1.append(inpt2[0])
+		del player1[inpt1]
+		player2.remove(inpt2[0])
+		return player1, player2, score_p1, score_p2
+	else:
+		score_p2.append(player1[inpt1])
+		score_p2.append(inpt2[0])
+		del player1[inpt1]
+		player2.remove(inpt2[0])
+		return player1, player2, score_p1, score_p2
+
+
 def game_result(score_p1, score_p2):
 	if score_p1 > score_p2:
 		while True:
@@ -265,6 +281,9 @@ while game:
 		card_buffer = []
 		for i in range(0,2):
 			inpt = input_func_choice()
+			while player_1[int(inpt)] in card_buffer:
+				print 'Choose another card, this was given already.'
+				inpt = input_func_choice()
 			card_buffer.append(player_1[int(inpt)])
 			player2.append(player_1[int(inpt)])
 
@@ -286,15 +305,8 @@ while game:
 			print 'Computer choice: '
 			print_card_template(inpt2)
 
-			if player1[inpt1] > inpt2[0]:
-				score_p1.append(player1[inpt1])
-				score_p1.append(inpt2[0])
-			else:
-				score_p2.append(player1[inpt1])
-				score_p2.append(inpt2[0])
-
-			del player1[inpt1]
-			player2.remove(inpt2[0])
+			player1, player2, score_p1, score_p2 = score_adder(
+				player1, player2, inpt1, inpt2, score_p1, score_p2)
 
 			os.system('clear')
 			print 'Your cards: ', 'Trump of the game:', game_trump
@@ -307,16 +319,8 @@ while game:
 
 			inpt1 = input_func()
 
-			if player1[inpt1] > inpt2[0]:
-				score_p1.append(player1[inpt1])
-				score_p1.append(inpt2[0])
-			else:
-				score_p2.append(player1[inpt1])
-				score_p2.append(inpt2[0])
-
-			del player1[inpt1]
-			player2.remove(inpt2[0])
-
+			player1, player2, score_p1, score_p2 = score_adder(
+				player1, player2, inpt1, inpt2, score_p1, score_p2)
 
 		os.system('clear')
 		print 'Your scores: ', score_counter(score_p1)
@@ -351,15 +355,8 @@ while game:
 			print 'Computer choice: '
 			print_card_template(inpt2)
 
-			if player1[inpt1] > inpt2[0]:
-				score_p1.append(player1[inpt1])
-				score_p1.append(inpt2[0])
-			else:
-				score_p2.append(player1[inpt1])
-				score_p2.append(inpt2[0])
-
-			del player1[inpt1]
-			player2.remove(inpt2[0])
+			player1, player2, score_p1, score_p2 = score_adder(
+				player1, player2, inpt1, inpt2, score_p1, score_p2)
 
 			os.system('clear')
 			print 'Your cards: ', 'Trump of the game:', game_trump
@@ -372,15 +369,8 @@ while game:
 
 			inpt1 = input_func()
 
-			if player1[inpt1] > inpt2[0]:
-				score_p1.append(player1[inpt1])
-				score_p1.append(inpt2[0])
-			else:
-				score_p2.append(player1[inpt1])
-				score_p2.append(inpt2[0])
-
-			del player1[inpt1]
-			player2.remove(inpt2[0])
+			player1, player2, score_p1, score_p2 = score_adder(
+				player1, player2, inpt1, inpt2, score_p1, score_p2)
 
 		os.system('clear')
 		print 'Your scores: ', score_counter(score_p1)
